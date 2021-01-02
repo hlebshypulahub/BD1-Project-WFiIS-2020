@@ -16,6 +16,28 @@ public class Employee {
     private Date PPE;
     private Date fiveYearStart;
     private Date fiveYearEnd;
+
+    public Employee(Employee other) {
+        this.id = other.id;
+        this.role = other.role;
+        this.firstName = other.firstName;
+        this.lastName = other.lastName;
+        this.DOB = other.DOB;
+        this.phone = other.phone;
+        this.address = other.address;
+        this.position = other.position;
+        this.category = other.category;
+        this.salary = other.salary;
+        this.PPE = other.PPE;
+        this.fiveYearStart = other.fiveYearStart;
+        this.fiveYearEnd = other.fiveYearEnd;
+        this.courseHoursSum = other.courseHoursSum;
+        this.courseDeadline = other.courseDeadline;
+    }
+
+    public Employee() {
+    }
+
     private String courseHoursSum;
     private Date courseDeadline;
 

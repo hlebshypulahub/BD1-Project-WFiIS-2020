@@ -6,26 +6,26 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.login.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.login.LoginController">
    <children>
-      <TextField fx:id="username" layoutX="432.0" layoutY="325.0" prefHeight="40.0" prefWidth="300.0" />
-      <TextField fx:id="password" layoutX="432.0" layoutY="414.0" prefHeight="40.0" prefWidth="300.0" />
-      <Label layoutX="432.0" layoutY="296.0" prefHeight="29.0" prefWidth="160.0" text="Nazwa użytkownika :">
+      <TextField fx:id="username" layoutX="50.0" layoutY="170.0" prefHeight="40.0" prefWidth="300.0" />
+      <TextField fx:id="password" layoutX="50.0" layoutY="259.0" prefHeight="40.0" prefWidth="300.0" />
+      <Label layoutX="50.0" layoutY="141.0" prefHeight="29.0" prefWidth="160.0" text="Nazwa użytkownika :">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="432.0" layoutY="385.0" prefHeight="29.0" prefWidth="160.0" text="Hasło :">
+      <Label layoutX="50.0" layoutY="230.0" prefHeight="29.0" prefWidth="160.0" text="Hasło :">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="472.0" layoutY="102.0" text="Company Manager Lite">
+      <Label layoutX="91.0" layoutY="50.0" text="Company Manager Lite">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Button defaultButton="true" layoutX="432.0" layoutY="474.0" mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="131.0" text="Login">
+      <Button fx:id="loginButton" defaultButton="true" layoutX="50.0" layoutY="319.0" mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="131.0" text="Login">
          <font>
             <Font size="15.0" />
          </font></Button>

@@ -11,7 +11,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("login/Login.fxml"));
         primaryStage.setTitle("Hleb Shypula - Projekt - Bazy Danych 1");
-        primaryStage.setScene(new Scene(root, 1200, 750));
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 
