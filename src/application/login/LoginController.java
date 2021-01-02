@@ -22,9 +22,12 @@ public class LoginController implements Initializable {
         Employee employee = Database.login(username.getText(), password.getText());
 
         if (employee != null) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Zalogowano!");
-            alert.setHeaderText("Witaj, " + employee.getId() + "!");
+            employee = Database.employeeFillInfo(employee);
+            assert employee != null;
+            alert.setHeaderText("Witaj, " + employee.getFirstName() +
+                    " " + employee.getLastName() + "!");
             alert.showAndWait();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
