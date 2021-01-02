@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Application:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Application_jar</output-path>
+    <root id="archive" name="Application.jar">
+      <element id="module-output" name="Application" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../Program Files/Java/javafx-sdk-15.0.1/lib/src.zip" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../Program Files/Java/javafx-sdk-15.0.1/lib/javafx-swt.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../Program Files/Java/javafx-sdk-15.0.1/lib/javafx.web.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../Program Files/Java/javafx-sdk-15.0.1/lib/javafx.base.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../Program Files/Java/javafx-sdk-15.0.1/lib/javafx.fxml.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../Program Files/Java/javafx-sdk-15.0.1/lib/javafx.media.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../Program Files/Java/javafx-sdk-15.0.1/lib/javafx.swing.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../Program Files/Java/javafx-sdk-15.0.1/lib/javafx.controls.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../Program Files/Java/javafx-sdk-15.0.1/lib/javafx.graphics.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../jdbc_pg_driver/postgresql-42.2.18.jar" path-in-jar="/" />
+      <element id="dir-copy" path="$PROJECT_DIR$/../../../../../../../Program Files/Java/javafx-sdk-11.0.2/bin" />
+      <element id="dir-copy" path="$PROJECT_DIR$/../../../../../../../jdbc_pg_driver" />
+    </root>
+  </artifact>
+</component>
