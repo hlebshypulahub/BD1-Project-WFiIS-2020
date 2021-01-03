@@ -10,7 +10,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("login/Login.fxml"));
-        primaryStage.setTitle("Hleb Shypula - Projekt - Bazy Danych 1");
+        primaryStage.setTitle("Hleb Shypula - Panel logowania");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }

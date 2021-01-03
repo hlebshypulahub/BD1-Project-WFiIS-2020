@@ -55,9 +55,10 @@ public class LoginController implements Initializable {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../dashboard/Dashboard.fxml"));
         Stage stage = new Stage();
+        stage.setTitle("Panel użytkownika");
         stage.setScene(new Scene(loader.load()));
         DashboardController controller = loader.getController();
-        controller.initData(employee);
+        controller.initUserData(employee);
         stage.show();
     }
 
