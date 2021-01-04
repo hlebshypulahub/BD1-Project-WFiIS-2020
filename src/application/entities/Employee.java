@@ -1,5 +1,7 @@
 package application.entities;
 
+import application.database.Database;
+
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -17,15 +19,15 @@ public class Employee {
     private String address;
     private String position;
     private String category;
-    private String salary;
+    private int salary;
     private LocalDate PPE;
     private LocalDate fiveYearStart;
     private LocalDate fiveYearEnd;
-    private String courseHoursSum;
+    private int courseHoursSum;
     private LocalDate courseDeadline;
 
 //    private final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-
+//
 //    public Employee(Employee other) {
 //        this.id = other.id;
 //        this.role = other.role;
@@ -68,7 +70,7 @@ public class Employee {
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        this.firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1).toLowerCase();
     }
 
     public String getLastName() {
@@ -76,11 +78,11 @@ public class Employee {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1).toLowerCase();;
     }
 
-    public String getDOB() {
-        return String.valueOf(DOB);
+    public LocalDate getDOB() {
+        return DOB;
     }
 
     public void setDOB(LocalDate DOB) {
@@ -119,52 +121,29 @@ public class Employee {
         this.category = category;
     }
 
-    public String getSalary() {
+    public int getSalary() {
         return salary;
     }
 
     public void setSalary(String salary) {
-        this.salary = salary;
+        this.salary = (salary.equals("") ?  0 :  Integer.parseInt(salary));
     }
 
-    public String getPPE() {
-        return String.valueOf(PPE);
+    public LocalDate getPPE() {
+        return PPE;
     }
 
     public void setPPE(LocalDate PPE) {
         this.PPE = PPE;
     }
 
-    public LocalDate getFiveYearStart() {
-        return fiveYearStart;
-    }
 
-    public void setFiveYearStart(LocalDate fiveYearStart) {
-        this.fiveYearStart = fiveYearStart;
-    }
-
-    public LocalDate getFiveYearEnd() {
-        return fiveYearEnd;
-    }
-
-    public void setFiveYearEnd(LocalDate fiveYearEnd) {
-        this.fiveYearEnd = fiveYearEnd;
-    }
-
-    public String getCourseHoursSum() {
+    public int getCourseHoursSum() {
         return courseHoursSum;
     }
 
     public void setCourseHoursSum(String courseHoursSum) {
-        this.courseHoursSum = courseHoursSum;
-    }
-
-    public LocalDate getCourseDeadline() {
-        return courseDeadline;
-    }
-
-    public void setCourseDeadline(LocalDate courseDeadline) {
-        this.courseDeadline = courseDeadline;
+        this.courseHoursSum = (courseHoursSum.equals("") ?  0 :  Integer.parseInt(courseHoursSum));
     }
 
     public void setId(int id) {
