@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="mainArea" prefHeight="750.0" prefWidth="933.0" style="-fx-background-color: #E6E6FA;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.dashboard.employee.control.employeeadd.EmployeeAddController">
+   <children>
+      <VBox fx:id="editVBox" layoutX="7.0" layoutY="7.0" prefHeight="736.0" prefWidth="396.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="54.0" prefWidth="396.0" text="Wprowadź dane:">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="firstNameAdd" prefHeight="25.0" prefWidth="371.0" promptText="Imię">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="lastNameAdd" prefHeight="25.0" prefWidth="371.0" promptText="Nazwisko">
+               <VBox.margin>
+                  <Insets top="1.0" />
+               </VBox.margin>
+            </TextField>
+            <ComboBox fx:id="roleAdd" prefHeight="25.0" prefWidth="396.0" promptText="Uprawnienia">
+               <VBox.margin>
+                  <Insets top="1.0" />
+               </VBox.margin>
+            </ComboBox>
+            <TextField fx:id="usernameAdd" prefHeight="25.0" prefWidth="371.0" promptText="nazwa użytkownika">
+               <VBox.margin>
+                  <Insets top="1.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="passwordAdd" prefHeight="25.0" prefWidth="371.0" promptText="hasło">
+               <VBox.margin>
+                  <Insets top="1.0" />
+               </VBox.margin>
+            </TextField>
+            <DatePicker fx:id="dobAdd" prefWidth="396.0" promptText="01.01.2000">
+               <VBox.margin>
+                  <Insets top="1.0" />
+               </VBox.margin>
+            </DatePicker>
+            <TextField fx:id="phoneAdd" prefHeight="25.0" prefWidth="371.0" promptText="telefon">
+               <VBox.margin>
+                  <Insets top="1.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="addressAdd" prefHeight="25.0" prefWidth="371.0" promptText="adres">
+               <VBox.margin>
+                  <Insets top="1.0" />
+               </VBox.margin>
+            </TextField>
+            <ComboBox fx:id="positionAdd" prefHeight="25.0" prefWidth="396.0" promptText="Stanowisko">
+               <VBox.margin>
+                  <Insets top="1.0" />
+               </VBox.margin>
+            </ComboBox>
+            <ComboBox fx:id="categoryAdd" prefHeight="25.0" prefWidth="396.0" promptText="Kategoria">
+               <VBox.margin>
+                  <Insets top="1.0" />
+               </VBox.margin>
+            </ComboBox>
+            <TextField fx:id="salaryAdd" prefHeight="25.0" prefWidth="371.0" promptText="wynagrodzenie">
+               <VBox.margin>
+                  <Insets top="1.0" />
+               </VBox.margin>
+            </TextField>
+            <DatePicker fx:id="ppeAdd" prefWidth="396.0" promptText="01.01.2000">
+               <VBox.margin>
+                  <Insets top="1.0" />
+               </VBox.margin>
+            </DatePicker>
+            <TextField fx:id="courseHoursSumAdd" prefHeight="25.0" prefWidth="371.0" promptText="suma godzin na kursach">
+               <VBox.margin>
+                  <Insets top="1.0" />
+               </VBox.margin>
+            </TextField>
+            <Button mnemonicParsing="false" onAction="#addEmployee" prefHeight="52.0" prefWidth="232.0" text="Dodaj">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</Pane>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="933.0" style="-fx-background-color: #E6E6FA;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.dashboard.employee.info.EmployeeInfoController">
+   <children>
+      <VBox fx:id="dataVBox" layoutX="14.0" layoutY="14.0" prefHeight="736.0" prefWidth="396.0">
+         <children>
+            <Label fx:id="header" prefHeight="30.0" prefWidth="527.0">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="firstName" prefHeight="21.0" prefWidth="397.0" text="Imię: ">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="lastName" prefHeight="21.0" prefWidth="397.0" text="Nazwisko: ">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="dob" prefHeight="21.0" prefWidth="397.0" text="Data urodzenia: ">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="phone" prefHeight="21.0" prefWidth="397.0" text="Telefon: ">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="address" prefHeight="21.0" prefWidth="397.0" text="Adres: ">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="position" prefHeight="21.0" prefWidth="397.0" text="Stanowisko: ">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="category" prefHeight="21.0" prefWidth="397.0" text="Kategoria: ">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="salary" prefHeight="21.0" prefWidth="397.0" text="Wynagrodzenie: ">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="ppe" prefHeight="21.0" prefWidth="397.0" text="Data otrzymania ŚOO: ">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="courseHoursSum" prefHeight="21.0" prefWidth="397.0" text="Suma godzin na kursach: ">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <Button fx:id="editButton" mnemonicParsing="false" prefHeight="39.0" prefWidth="193.0" text="Edytuj">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="deleteButton" mnemonicParsing="false" prefHeight="39.0" prefWidth="193.0" text="Usuń">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <VBox fx:id="editVBox" layoutX="410.0" layoutY="14.0" prefHeight="736.0" prefWidth="396.0">
+         <children>
+            <TextField fx:id="firstNameEdit" prefHeight="25.0" prefWidth="371.0">
+               <VBox.margin>
+                  <Insets top="38.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="lastNameEdit" prefHeight="25.0" prefWidth="371.0">
+               <VBox.margin>
+                  <Insets top="1.0" />
+               </VBox.margin>
+            </TextField>
+            <DatePicker fx:id="dobEdit" prefHeight="25.0" prefWidth="396.0">
+               <VBox.margin>
+                  <Insets top="1.0" />
+               </VBox.margin>
+            </DatePicker>
+            <TextField fx:id="phoneEdit" prefHeight="25.0" prefWidth="371.0">
+               <VBox.margin>
+                  <Insets top="1.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="addressEdit" prefHeight="25.0" prefWidth="371.0">
+               <VBox.margin>
+                  <Insets top="1.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="positionEdit" prefHeight="25.0" prefWidth="371.0">
+               <VBox.margin>
+                  <Insets top="1.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="categoryEdit" prefHeight="25.0" prefWidth="371.0">
+               <VBox.margin>
+                  <Insets top="1.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="salaryEdit" prefHeight="25.0" prefWidth="371.0">
+               <VBox.margin>
+                  <Insets top="1.0" />
+               </VBox.margin>
+            </TextField>
+            <DatePicker fx:id="ppeEdit" prefHeight="25.0" prefWidth="396.0">
+               <VBox.margin>
+                  <Insets top="1.0" />
+               </VBox.margin>
+            </DatePicker>
+            <TextField fx:id="courseHoursSumEdit" prefHeight="25.0" prefWidth="371.0">
+               <VBox.margin>
+                  <Insets top="1.0" />
+               </VBox.margin>
+            </TextField>
+         </children>
+      </VBox>
+   </children>
+</Pane>
