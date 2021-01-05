@@ -48,15 +48,6 @@ public class EmployeeAddController implements Initializable {
         employee.setUsername(usernameAdd.getText());
         employee.setFirstName(firstNameAdd.getText());
         employee.setLastName(lastNameAdd.getText());
-        System.out.println(employee.getFirstName() + " " + employee.getLastName() + " " + employee.getUsername());
-        if (!Database.checkIfAddPossible(employee)) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Błąd!");
-            alert.setHeaderText("Nazwa użytkownika \"" + employee.getUsername() + "\" już jest zajęta\n" +
-                    "lub użytkownik o takim imieniu i nazwisku już istnieje!");
-            alert.showAndWait();
-            return;
-        }
         employee.setSalary(salaryAdd.getText());
         employee.setAddress(addressAdd.getText());
         employee.setPosition(positionAdd.getValue() == null ? "Pracownik" : positionAdd.getValue());
@@ -68,9 +59,7 @@ public class EmployeeAddController implements Initializable {
         employee.setPassword(passwordAdd.getText());
         employee.setCourseHoursSum(courseHoursSumAdd.getText());
 
-        boolean done = Database.addEmployee(employee);
-
-        if (done) {
+        if (Database.addEmployee(employee)) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Udało się!");
             alert.setHeaderText("Pracownik " + employee.getFirstName() +

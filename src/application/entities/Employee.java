@@ -1,10 +1,5 @@
 package application.entities;
 
-import application.database.Database;
-
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 public class Employee {
@@ -21,10 +16,7 @@ public class Employee {
     private String category;
     private int salary;
     private LocalDate PPE;
-    private LocalDate fiveYearStart;
-    private LocalDate fiveYearEnd;
     private int courseHoursSum;
-    private LocalDate courseDeadline;
 
 //    private final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 //
@@ -136,7 +128,6 @@ public class Employee {
     public void setPPE(LocalDate PPE) {
         this.PPE = PPE;
     }
-
 
     public int getCourseHoursSum() {
         return courseHoursSum;
