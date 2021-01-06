@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="750.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.dashboard.DashboardController">
    <children>
-      <VBox prefHeight="750.0" prefWidth="267.0" style="-fx-background-color: #ADD8E6;">
+      <VBox fx:id="buttonsVBox" prefHeight="750.0" prefWidth="267.0" style="-fx-background-color: #ADD8E6;">
          <children>
             <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showMainPage" prefHeight="46.0" prefWidth="200.0" text="Strona główna">
                <font>
@@ -28,7 +28,7 @@
                   <Insets left="33.0" top="20.0" />
                </VBox.margin>
             </Button>
-            <Label alignment="CENTER" prefHeight="10.0" prefWidth="267.0" text="Panel administratora">
+            <Label fx:id="controlPanelLabel" alignment="CENTER" prefHeight="10.0" prefWidth="267.0" text="Panel administratora">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
@@ -36,13 +36,21 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Button alignment="CENTER" mnemonicParsing="false" onAction="#showEmployeeControlStage" prefHeight="46.0" prefWidth="267.0" text="Pracownicy">
+            <Button fx:id="employeeControlButton" alignment="CENTER" mnemonicParsing="false" onAction="#showEmployeeControlStage" prefHeight="46.0" prefWidth="267.0" text="Pracownicy">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
                <font>
                   <Font size="15.0" />
                </font>
+            </Button>
+            <Button fx:id="facilityControlButton" alignment="CENTER" mnemonicParsing="false" onAction="#showFacilityControlStage" prefHeight="46.0" prefWidth="267.0" text="Obiekty handlowe">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
             </Button>
          </children>
       </VBox>

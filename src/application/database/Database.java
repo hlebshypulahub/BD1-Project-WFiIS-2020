@@ -93,7 +93,7 @@ public class Database {
     }
 
     public static boolean addEmployee(Employee employee) {
-        String sql = "select addemployee(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String sql = "SELECT addemployee(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         try (Connection conn = connect();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -148,8 +148,14 @@ public class Database {
         }
     }
 
-    public static ObservableList<Employee> employeeDataView() {
-        String sql = "SELECT * FROM employee_data_view";
+    public static ObservableList<Employee> employeeDataView(String type, int idFacility) {
+        String sql = "";
+        if(type.equals("all")) {
+            sql = "SELECT * FROM employee_data_view";
+        }
+        else if(type.equals("forFacility")) {
+            sql = "SELECT * FROM employee_data_view edv JOIN employee_facility ef ON edv.id_employee = ef.id_employee WHERE ef.id_facility = " + idFacility + ";";
+        }
         ObservableList<Employee> observableList = FXCollections.observableArrayList();
 
         try (Connection conn = connect();
@@ -186,6 +192,7 @@ public class Database {
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
                 Facility facility = new Facility();
+                facility.setId(rs.getInt("id_facility"));
                 facility.setName(rs.getString("name"));
                 facility.setStatus(rs.getString("status"));
                 observableList.add(facility);
@@ -231,27 +238,7 @@ public class Database {
         return false;
     }
 
-    public static void fillFacilities(ComboBox<String> comboBox) {
-        String sql = "SELECT * from fill_facility_view;";
-
-        try (
-                Connection conn = connect();
-                PreparedStatement ps = conn.prepareStatement(sql)) {
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                comboBox.getItems().add(rs.getString("data"));
-                ps.close();
-                conn.close();
-            }
-            rs.close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            showMessageDialog(null, e.getMessage());
-        }
-    }
-
     public static boolean addEmployeeToFacility(int employeeId, String facilityStatus, String facilityName) {
-        System.out.println(facilityStatus + " " + facilityName);
         String sql = "SELECT addEmployeeToFacility('" + employeeId + "', '" + facilityStatus + "', '" + facilityName + "');";
 
         try (Connection conn = connect();

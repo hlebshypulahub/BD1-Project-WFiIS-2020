@@ -33,7 +33,7 @@ public class EmployeeControlController implements Initializable {
         Parent root = loader.load();
 
         EmployeeAllController controller = loader.getController();
-        controller.fillData();
+        controller.initData();
 
         mainArea.getChildren().clear();
         mainArea.getChildren().addAll(root);

@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <Pane fx:id="mainArea" prefHeight="750.0" prefWidth="933.0" style="-fx-background-color: #E6E6FA;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.dashboard.employee.control.employeeall.EmployeeAllController">
    <children>
-      <TableView fx:id="table" prefHeight="498.0" prefWidth="933.0">
+      <TableView fx:id="table" onMouseClicked="#enableButtons" prefHeight="354.0" prefWidth="933.0">
         <columns>
           <TableColumn fx:id="firstNameCol" maxWidth="175.0" minWidth="-1.0" prefWidth="171.0" text="Imię" />
           <TableColumn fx:id="lastNameCol" maxWidth="201.0" minWidth="-1.0" prefWidth="180.0" text="Nazwisko" />
@@ -17,5 +20,27 @@
             <TableColumn fx:id="ppeCol" maxWidth="290.0" minWidth="-1.0" prefWidth="138.0" text="Otrzymano ŚOO" />
         </columns>
       </TableView>
+      <Button fx:id="employeeToFacilityButton" layoutX="14.0" layoutY="375.0" mnemonicParsing="false" onAction="#showAddEmployeeToFacility" prefHeight="58.0" prefWidth="217.0" text="Dodaj pracownika do obiektu">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <ComboBox fx:id="chooseFacility" layoutX="14.0" layoutY="445.0" prefHeight="25.0" prefWidth="217.0" promptText="Wybierz obiekt" />
+      <Button fx:id="addButton" layoutX="14.0" layoutY="477.0" mnemonicParsing="false" onAction="#addEmployeeToFacility" prefHeight="40.0" prefWidth="96.0" text="Dodaj">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="employeeFromFacilityButton" layoutX="285.0" layoutY="374.0" mnemonicParsing="false" onAction="#showListEmployeeFromFacility" prefHeight="58.0" prefWidth="251.0" text="Wylistuj pracowników dla obiektu">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <ComboBox fx:id="chooseFacilityCopy" layoutX="285.0" layoutY="444.0" prefHeight="25.0" prefWidth="251.0" promptText="Wybierz obiekt" />
+      <Button fx:id="listButton" layoutX="285.0" layoutY="476.0" mnemonicParsing="false" onAction="#listEmployeeFromFacility" prefHeight="40.0" prefWidth="96.0" text="Wylistuj">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
    </children>
 </Pane>
