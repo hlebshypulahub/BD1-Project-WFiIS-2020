@@ -11,10 +11,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
-import javax.xml.crypto.Data;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
@@ -48,7 +46,6 @@ public class EmployeeAllController implements Initializable {
     @FXML
     private ComboBox<String> chooseFacilityCopy;
     private ObservableList<Facility> observableListFacility;
-    private ObservableList<Employee> observableList;
 
     public void initData() {
         fillTable(Database.employeeDataView("all", 0));
@@ -88,7 +85,8 @@ public class EmployeeAllController implements Initializable {
 
     @FXML
     public void enableButtons(MouseEvent e) {
-        employeeToFacilityButton.setDisable(false);
+        if (table.getSelectionModel().getSelectedIndex() != -1)
+            employeeToFacilityButton.setDisable(false);
     }
 
     @FXML

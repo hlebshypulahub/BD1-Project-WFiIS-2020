@@ -1,16 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <Pane fx:id="mainArea" prefHeight="750.0" prefWidth="933.0" style="-fx-background-color: #E6E6FA;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.dashboard.facility.control.facilityall.FacilityAllController">
    <children>
-      <TableView fx:id="table" prefHeight="498.0" prefWidth="933.0">
+      <TableView fx:id="table" onMouseClicked="#enableButtons" prefHeight="298.0" prefWidth="933.0">
          <columns>
             <TableColumn fx:id="nameCol" maxWidth="682.0" minWidth="-1.0" prefWidth="672.0" text="Nazwa" />
             <TableColumn fx:id="statusCol" maxWidth="761.0" minWidth="-1.0" prefWidth="260.0" text="Status" />
          </columns>
       </TableView>
+      <Button fx:id="addButton" layoutX="14.0" layoutY="307.0" mnemonicParsing="false" onAction="#showAddInspection" prefHeight="53.0" prefWidth="234.0" text="Dodaj inspekcję">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Pane fx:id="pane" layoutX="14.0" layoutY="375.0" prefHeight="265.0" prefWidth="920.0">
+         <children>
+            <TextField fx:id="employeeText" prefHeight="25.0" prefWidth="234.0" promptText="Osoba odpowiedzialna" />
+            <DatePicker fx:id="date" editable="false" layoutY="35.0" prefHeight="25.0" prefWidth="234.0" promptText="Data" />
+            <TextField fx:id="descriptionText" layoutY="70.0" prefHeight="25.0" prefWidth="234.0" promptText="Opis" />
+            <Label fx:id="questionLabel" layoutY="111.0" text="Pytania:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="question1Label" layoutY="140.0" text="Czy wilgotność w pomieszczeniu jest zgodna z zasadami?" />
+            <Label fx:id="question2Label" layoutY="167.0" prefHeight="17.0" prefWidth="303.0" text="Czy wszystkie lodówki są sprawne?" />
+            <Label fx:id="question3Label" layoutY="194.0" prefHeight="17.0" prefWidth="303.0" text="Czy wszyscy pracownicy są wyposażeni w ŚOO?" />
+            <ComboBox fx:id="answer1" layoutX="315.0" layoutY="136.0" onAction="#checkAnswer" prefHeight="25.0" prefWidth="107.0" promptText="Odpowiedź" />
+            <ComboBox fx:id="answer2" layoutX="315.0" layoutY="163.0" onAction="#checkAnswer" prefHeight="25.0" prefWidth="107.0" promptText="Odpowiedź" />
+            <ComboBox fx:id="answer3" layoutX="315.0" layoutY="190.0" onAction="#checkAnswer" prefHeight="25.0" prefWidth="107.0" promptText="Odpowiedź" />
+            <TextField fx:id="employeeText1" layoutX="581.0" layoutY="136.0" prefHeight="25.0" prefWidth="186.0" promptText="Osoba odpowiedzialna" />
+            <TextField fx:id="employeeText2" layoutX="581.0" layoutY="163.0" prefHeight="25.0" prefWidth="186.0" promptText="Osoba odpowiedzialna" />
+            <TextField fx:id="employeeText3" layoutX="581.0" layoutY="190.0" prefHeight="25.0" prefWidth="186.0" promptText="Osoba odpowiedzialna" />
+            <DatePicker fx:id="date1" editable="false" layoutX="767.0" layoutY="136.0" prefHeight="25.0" prefWidth="150.0" promptText="Termin korekty" />
+            <DatePicker fx:id="date2" editable="false" layoutX="767.0" layoutY="163.0" prefHeight="25.0" prefWidth="150.0" promptText="Termin korekty" />
+            <DatePicker fx:id="date3" editable="false" layoutX="767.0" layoutY="190.0" prefHeight="25.0" prefWidth="150.0" promptText="Termin korekty" />
+            <Button fx:id="addInspectionButton" layoutX="8.0" layoutY="221.0" mnemonicParsing="false" onAction="#addInspection" prefHeight="39.0" prefWidth="133.0" text="Dodaj">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <TextField fx:id="descriptionText1" layoutX="422.0" layoutY="136.0" prefHeight="25.0" prefWidth="159.0" promptText="Opisz szczegóły" />
+            <TextField fx:id="descriptionText3" layoutX="422.0" layoutY="190.0" prefHeight="25.0" prefWidth="159.0" promptText="Opisz szczegóły" />
+            <TextField fx:id="descriptionText2" layoutX="422.0" layoutY="163.0" prefHeight="25.0" prefWidth="159.0" promptText="Opisz szczegóły" />
+         </children>
+      </Pane>
    </children>
 </Pane>

@@ -1,12 +1,10 @@
 package application.dashboard.employee.info;
 
+import application.database.Database;
 import application.entities.Employee;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -64,11 +62,14 @@ public class EmployeeInfoController implements Initializable {
     private VBox dataVBox;
     @FXML
     private VBox editVBox;
+    @FXML
+    private ListView<String> responsibilityList;
     private Employee userEmployee;
     private Employee procEmployee;
 
     public void initUserData(Employee employee) {
         this.userEmployee = employee;
+        responsibilityList.getItems().addAll(Database.fillEmployeeResposibility(userEmployee.getId()));
         setHeader();
         setData();
     }

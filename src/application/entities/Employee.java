@@ -41,6 +41,11 @@ public class Employee {
 //    public Employee() {
 //    }
 
+    @Override
+    public String toString() {
+        return lastName + " " + firstName + " (" + position + ")";
+    }
+
     public String getUsername() {
         return username;
     }

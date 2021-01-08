@@ -7,7 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -31,29 +30,22 @@ public class LoginController implements Initializable {
         Employee employee = Database.login(username.getText(), password.getText());
 
         if (employee != null) {
-            employee = Database.employeeFillInfo(employee);
-
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setTitle("Zalogowano!");
-//            assert employee != null;
-//            alert.setHeaderText("Witaj, " + employee.getFirstName() +
-//                    " " + employee.getLastName() + "!");
-//            alert.showAndWait();
-
+//            employee = Database.employeeFillInfo(employee);
             showDashboard(employee);
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Nie zalogowano!");
-            alert.setHeaderText("Sprawdź poprawność username lub password!");
-            alert.showAndWait();
         }
+//        else {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Nie zalogowano!");
+//            alert.setHeaderText("Sprawdź poprawność username lub password!");
+//            alert.showAndWait();
+//        }
     }
 
     public void showDashboard(Employee employee) throws IOException {
         Stage primaryStage = (Stage) loginButton.getScene().getWindow();
         primaryStage.close();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../dashboard/Dashboard.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/dashboard/Dashboard.fxml"));
         Stage stage = new Stage();
         stage.setTitle("Panel użytkownika");
         stage.setScene(new Scene(loader.load()));

@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -101,6 +102,19 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </Label>
+            <Label fx:id="responsibility" prefHeight="21.0" prefWidth="196.0" text="Odpowiedzialność:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <ListView fx:id="responsibilityList" prefHeight="122.0" prefWidth="396.0">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </ListView>
             <Button fx:id="editButton" mnemonicParsing="false" prefHeight="39.0" prefWidth="193.0" text="Edytuj">
                <VBox.margin>
                   <Insets top="5.0" />

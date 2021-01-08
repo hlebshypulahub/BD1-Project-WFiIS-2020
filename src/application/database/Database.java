@@ -7,6 +7,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -33,18 +35,26 @@ public class Database {
     }
 
     public static Employee login(String username, String password) {
-        String sql = "SELECT id_employee, role FROM employee_data where username = ? AND password = ?";
+        String sql = "select * from loginAndFillInfo('" + username + "', '" + password + "');";
 
         try (
                 Connection conn = connect();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
             Employee employee = new Employee();
-            ps.setString(1, username);
-            ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                employee.setId(rs.getInt("id_employee"));
+                employee.setId(rs.getInt("id_emp"));
                 employee.setRole(rs.getString("role"));
+                employee.setFirstName(rs.getString("first_name"));
+                employee.setLastName(rs.getString("last_name"));
+                employee.setAddress(rs.getString("address"));
+                employee.setCategory(rs.getString("category"));
+                employee.setCourseHoursSum(rs.getString("course_hours_sum"));
+                employee.setDOB(rs.getDate("DOB") == null ? null : rs.getDate("DOB").toLocalDate());
+                employee.setPhone(rs.getString("phone"));
+                employee.setPosition(rs.getString("pos"));
+                employee.setPPE(rs.getDate("PPE") == null ? null : rs.getDate("PPE").toLocalDate());
+                employee.setSalary(rs.getString("salary"));
                 ps.close();
                 rs.close();
                 conn.close();
@@ -59,37 +69,23 @@ public class Database {
         return null;
     }
 
-    public static Employee employeeFillInfo(Employee employee) {
-        String sql = "SELECT e.first_name, e.last_name, ei.* FROM employee e JOIN employee_info ei ON e.id_employee = ei.id_employee WHERE e.id_employee = ?;";
+    public static ArrayList<String> fillEmployeeResposibility(int employeeId) {
+        String sql = "SELECT * FROM employee_resposibility WHERE id_employee = " + employeeId + ";";
+        ArrayList<String> arrayList = new ArrayList<>();
 
-        try (
-                Connection conn = connect();
-                PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, employee.getId());
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                employee.setFirstName(rs.getString("first_name"));
-                employee.setLastName(rs.getString("last_name"));
-                employee.setAddress(rs.getString("address"));
-                employee.setCategory(rs.getString("category"));
-                employee.setCourseHoursSum(rs.getString("course_hours_sum"));
-                employee.setDOB(rs.getDate("DOB") == null ? null : rs.getDate("DOB").toLocalDate());
-                employee.setPhone(rs.getString("phone"));
-                employee.setPosition(rs.getString("position"));
-                employee.setPPE(rs.getDate("PPE") == null ? null : rs.getDate("PPE").toLocalDate());
-                employee.setSalary(rs.getString("salary"));
-                ps.close();
-                rs.close();
-                conn.close();
-                return employee;
+        try (Connection conn = connect();
+             Statement st = conn.createStatement();
+        ) {
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                arrayList.add(rs.getString("description") + " (na obiekcie: " + rs.getString("name") + ", termin do " + rs.getDate("correction_term") + ")");
             }
+            return arrayList;
         } catch (SQLException e) {
-            showMessageDialog(null, e.getMessage());
             System.out.println(e.getMessage());
+            showMessageDialog(null, e.getMessage());
             return null;
         }
-
-        return null;
     }
 
     public static boolean addEmployee(Employee employee) {
@@ -150,10 +146,9 @@ public class Database {
 
     public static ObservableList<Employee> employeeDataView(String type, int idFacility) {
         String sql = "";
-        if(type.equals("all")) {
+        if (type.equals("all")) {
             sql = "SELECT * FROM employee_data_view";
-        }
-        else if(type.equals("forFacility")) {
+        } else if (type.equals("forFacility")) {
             sql = "SELECT * FROM employee_data_view edv JOIN employee_facility ef ON edv.id_employee = ef.id_employee WHERE ef.id_facility = " + idFacility + ";";
         }
         ObservableList<Employee> observableList = FXCollections.observableArrayList();
@@ -161,6 +156,7 @@ public class Database {
         try (Connection conn = connect();
              Statement st = conn.createStatement();
         ) {
+            long startTime = System.nanoTime();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
                 Employee employee = new Employee();
@@ -174,6 +170,8 @@ public class Database {
                 employee.setSalary(rs.getString("salary"));
                 observableList.add(employee);
             }
+            long elapsedTime = System.nanoTime() - startTime;
+            System.out.println(" | " + (double) elapsedTime / 1000000 + " ms");
             return observableList;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -250,6 +248,45 @@ public class Database {
             System.out.println(e.getMessage());
         }
         return false;
+    }
+
+    public static void addInspection(int employeeId, int facilityId, LocalDate inspectionDate, String description,
+                                     String question1, String answer1, int employee1Id, LocalDate date1, String description1, String question2, String answer2, int employee2Id, LocalDate date2, String description2,
+                                     String question3, String answer3, int employee3Id, LocalDate date3, String description3) {
+        String sql = "INSERT INTO inspection (id_employee, id_facility, date, description) VALUES (" + employeeId + ", " + facilityId + ", " + (inspectionDate == null ? null : "'" + inspectionDate + "'") + ", '" + description + "') RETURNING id_inspection;";
+
+        int inspectionId = 0;
+
+        try (
+                Connection conn = connect();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                inspectionId = rs.getInt("id_inspection");
+                ps.close();
+                addCheckup(conn, inspectionId, question1, answer1, employee1Id, date1, description1);
+                addCheckup(conn, inspectionId, question2, answer2, employee2Id, date2, description2);
+                addCheckup(conn, inspectionId, question3, answer3, employee3Id, date3, description3);
+                conn.close();
+            }
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            showMessageDialog(null, e.getMessage());
+            System.exit(1);
+        }
+    }
+
+    public static void addCheckup(Connection conn, int inspectionId, String question, String answer, int employeeId, LocalDate date, String description) {
+        String sql = "SELECT * FROM addCheckup (" + inspectionId + ", '" + question + "', '" + answer + "', " + (date == null ? null : "'" + date + "'") + ", '" + employeeId + "', '" + description + "');";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.execute();
+        } catch (SQLException e) {
+            showMessageDialog(null, e.getMessage());
+            System.out.println(e.getMessage());
+            System.exit(1);
+        }
     }
 }
 
