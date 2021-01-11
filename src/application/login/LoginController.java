@@ -30,15 +30,8 @@ public class LoginController implements Initializable {
         Employee employee = Database.login(username.getText(), password.getText());
 
         if (employee != null) {
-//            employee = Database.employeeFillInfo(employee);
             showDashboard(employee);
         }
-//        else {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Nie zalogowano!");
-//            alert.setHeaderText("Sprawdź poprawność username lub password!");
-//            alert.showAndWait();
-//        }
     }
 
     public void showDashboard(Employee employee) throws IOException {

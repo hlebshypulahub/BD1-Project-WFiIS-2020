@@ -24,7 +24,13 @@ public class FacilityAddController implements Initializable {
     @FXML
     public void addFacility(ActionEvent e) {
         Facility facility = new Facility();
-
+        if(nameAdd.getText().equals("")) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Błąd!");
+            alert.setHeaderText("Podaj nazwę!");
+            alert.showAndWait();
+            return;
+        }
         facility.setName(nameAdd.getText());
         facility.setStatus(statusAdd.getValue() == null ? "Apteka" : statusAdd.getValue());
         if (Database.addFacility(facility)) {

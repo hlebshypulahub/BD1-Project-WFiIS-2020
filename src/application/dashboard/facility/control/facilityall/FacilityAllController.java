@@ -1,12 +1,15 @@
 package application.dashboard.facility.control.facilityall;
 
+import application.dashboard.employee.info.EmployeeInfoController;
 import application.database.Database;
 import application.entities.Employee;
 import application.entities.Facility;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -15,16 +18,29 @@ import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import org.controlsfx.control.textfield.TextFields;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class FacilityAllController implements Initializable {
+    @FXML
+    private Pane mainArea;
     @FXML
     private TableView<Facility> table;
     @FXML
     private TableColumn<Facility, String> nameCol;
     @FXML
     private TableColumn<Facility, String> statusCol;
+    @FXML
+    private TableView<Employee> tableEmployee;
+    @FXML
+    private TableColumn<Employee, String> employeeFirstNameCol;
+    @FXML
+    private TableColumn<Employee, String> employeeLastNameCol;
+    @FXML
+    private TableColumn<Employee, String> employeePositionCol;
+    @FXML
+    private ListView<String> tableOptions;
     @FXML
     private TextField employeeText;
     @FXML
@@ -58,7 +74,11 @@ public class FacilityAllController implements Initializable {
     @FXML
     private TextField descriptionText3;
     @FXML
+    private TextField holidayProceeds;
+    @FXML
     private DatePicker date1;
+    @FXML
+    private DatePicker holidayDate;
     @FXML
     private DatePicker date2;
     @FXML
@@ -66,16 +86,127 @@ public class FacilityAllController implements Initializable {
     @FXML
     private Button addButton;
     @FXML
-    private Button addInspectionButton;
+    private Button addButtonHoliday;
+    @FXML
+    private Button listInspectionButton;
+    @FXML
+    private Button listHolidayButton;
+    @FXML
+    private Button listEmployeeButton;
+    @FXML
+    private Button employeeInfoButton;
     @FXML
     private Pane pane;
+    @FXML
+    private Pane holidayPane;
+    @FXML
+    private ComboBox<String> holidayName;
+    @FXML
+    private ComboBox<String> holidayEmployee;
     private ObservableList<Employee> observableList;
+    private ObservableList<Employee> observableListForFacility;
+    int choosenFacility;
 
     public void fillData() {
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
         ObservableList<Facility> observableList = Database.facilityDataView();
         table.setItems(observableList);
+        choosenFacility = table.getSelectionModel().getSelectedIndex();
+    }
+
+    @FXML
+    public void showEmployeeInfoPage(ActionEvent e) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/dashboard/employee/info/EmployeeInfo.fxml"));
+        Parent root = loader.load();
+
+        EmployeeInfoController controller = loader.getController();
+        controller.initUserData(tableEmployee.getSelectionModel().getSelectedItem());
+        controller.drawPane("admin");
+
+        mainArea.getChildren().clear();
+        mainArea.getChildren().addAll(root);
+    }
+
+    @FXML
+    public void showInspections(ActionEvent event) {
+        ObservableList<String> observableListInspection = Database.inspectionDataView(table.getSelectionModel().getSelectedItem().getId());
+        tableOptions.setItems(observableListInspection);
+    }
+
+    @FXML
+    public void showHolidays(ActionEvent event) {
+        ObservableList<String> observableListInspection = Database.holidayDataView(table.getSelectionModel().getSelectedItem().getId());
+        tableOptions.setItems(observableListInspection);
+    }
+
+    @FXML
+    public void showEmployees(ActionEvent event) {
+        employeeFirstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        employeeLastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        employeePositionCol.setCellValueFactory(new PropertyValueFactory<>("position"));
+        observableListForFacility = Database.employeeDataView("for Facility", table.getSelectionModel().getSelectedItem().getId());
+        tableEmployee.setItems(observableListForFacility);
+    }
+
+    @FXML
+    public void addHoliday(ActionEvent event) {
+        String employeeFirstName;
+        String employeeLastName;
+
+        if (holidayEmployee.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Błąd!");
+            alert.setHeaderText("Podaj dane pracownika!");
+            alert.showAndWait();
+            return;
+        }
+
+        if (holidayName.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Błąd!");
+            alert.setHeaderText("Podaj święto!");
+            alert.showAndWait();
+            return;
+        }
+
+        int employeeId = 0;
+        employeeFirstName = holidayEmployee.getValue().split(" ", 3)[1];
+        employeeLastName = holidayEmployee.getValue().split(" ", 3)[0];
+        for (Employee e : observableListForFacility) {
+            if (e.getFirstName().equals(employeeFirstName) && e.getLastName().equals(employeeLastName)) {
+                employeeId = e.getId();
+            }
+        }
+
+        int facilityId = table.getSelectionModel().getSelectedItem().getId();
+
+        try {
+            Database.addHolidayForFacility(facilityId, employeeId, holidayName.getValue(), holidayDate.getValue(), Float.parseFloat(holidayProceeds.getText()));
+        } catch (Exception exception) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Błąd!");
+            alert.setHeaderText("Podaj dochód poprawnie!");
+            alert.showAndWait();
+            return;
+        }
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Udało się!");
+        alert.setHeaderText("święto zostało dodane!");
+        alert.showAndWait();
+
+        table.getSelectionModel().select(-1);
+        addButton.setDisable(true);
+        addButtonHoliday.setDisable(true);
+        listInspectionButton.setDisable(true);
+        listHolidayButton.setDisable(true);
+        listEmployeeButton.setDisable(true);
+        employeeInfoButton.setDisable(true);
+        tableOptions.getItems().clear();
+        tableEmployee.getItems().clear();
+        pane.setVisible(false);
+        holidayPane.setVisible(false);
     }
 
     @FXML
@@ -114,6 +245,13 @@ public class FacilityAllController implements Initializable {
                     employee1Id = e.getId();
                 }
             }
+            if(employee1Id == 0) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Udało się!");
+                alert.setHeaderText("Pracownik nie istnieje!");
+                alert.showAndWait();
+                return;
+            }
         }
 
         int employee2Id = 0;
@@ -124,6 +262,13 @@ public class FacilityAllController implements Initializable {
                 if (e.getFirstName().equals(employeeFirstName) && e.getLastName().equals(employeeLastName)) {
                     employee2Id = e.getId();
                 }
+            }
+            if(employee2Id == 0) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Udało się!");
+                alert.setHeaderText("Pracownik nie istnieje!");
+                alert.showAndWait();
+                return;
             }
         }
 
@@ -136,11 +281,24 @@ public class FacilityAllController implements Initializable {
                     employee3Id = e.getId();
                 }
             }
+            if(employee3Id == 0) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Udało się!");
+                alert.setHeaderText("Pracownik nie istnieje!");
+                alert.showAndWait();
+                return;
+            }
         }
 
         int facilityId = table.getSelectionModel().getSelectedItem().getId();
 
-        System.out.println(employeeId);
+        if(employeeId == 0) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Udało się!");
+            alert.setHeaderText("Pracownik nie istnieje!");
+            alert.showAndWait();
+            return;
+        }
 
         Database.addInspection(employeeId, facilityId, date.getValue(), descriptionText.getText(),
                 question1Label.getText(), answer1.getValue(), employee1Id, date1.getValue(), descriptionText1.getText(),
@@ -154,13 +312,45 @@ public class FacilityAllController implements Initializable {
 
         table.getSelectionModel().select(-1);
         addButton.setDisable(true);
+        listInspectionButton.setDisable(true);
+        listHolidayButton.setDisable(true);
+        listEmployeeButton.setDisable(true);
+        tableOptions.getItems().clear();
+        tableEmployee.getItems().clear();
+        addButtonHoliday.setDisable(true);
+        employeeInfoButton.setDisable(true);
+        holidayPane.setVisible(false);
         pane.setVisible(false);
     }
 
     @FXML
-    public void enableButtons(MouseEvent e) {
-        if (table.getSelectionModel().getSelectedIndex() != -1)
+    public void enableButtons(MouseEvent event) {
+        if (choosenFacility != table.getSelectionModel().getSelectedIndex()) {
+            choosenFacility = table.getSelectionModel().getSelectedIndex();
+            addButton.setDisable(true);
+            addButtonHoliday.setDisable(true);
+            pane.setVisible(false);
+            holidayPane.setVisible(false);
+            holidayEmployee.getItems().clear();
+            listInspectionButton.setDisable(true);
+            listHolidayButton.setDisable(true);
+            listEmployeeButton.setDisable(true);
+            tableEmployee.getItems().clear();
+        }
+        if (choosenFacility != -1) {
             addButton.setDisable(false);
+            addButtonHoliday.setDisable(false);
+            listInspectionButton.setDisable(false);
+            listHolidayButton.setDisable(false);
+            listEmployeeButton.setDisable(false);
+        }
+    }
+
+    @FXML
+    public void enableEmployeeInfoButton(MouseEvent event) {
+        if (tableEmployee.getSelectionModel().getSelectedIndex() != -1) {
+            employeeInfoButton.setDisable(false);
+        }
     }
 
     @FXML
@@ -185,12 +375,27 @@ public class FacilityAllController implements Initializable {
     }
 
     @FXML
+    public void showAddHoliday(ActionEvent event) {
+        holidayPane.setVisible(true);
+        holidayName.getItems().addAll("Wielkanoc", "Boże Narodzenie");
+        observableListForFacility = Database.employeeDataView("for Facility", table.getSelectionModel().getSelectedItem().getId());
+        assert observableListForFacility != null;
+        for (Employee e : observableListForFacility) {
+            holidayEmployee.getItems().add(e.toString());
+        }
+        assert observableListForFacility != null;
+        employeeText.setText(observableListForFacility.get(0).toString());
+    }
+
+    @FXML
     public void checkAnswer(ActionEvent event) {
         if (answer1.getValue() != null) {
             if (answer1.getValue().equals("Nie")) {
                 employeeText1.setVisible(true);
                 descriptionText1.setVisible(true);
                 date1.setVisible(true);
+                assert observableList != null;
+                employeeText1.setText(observableList.get(0).toString());
             } else {
                 employeeText1.setVisible(false);
                 descriptionText1.setVisible(false);
@@ -202,6 +407,8 @@ public class FacilityAllController implements Initializable {
                 employeeText2.setVisible(true);
                 descriptionText2.setVisible(true);
                 date2.setVisible(true);
+                assert observableList != null;
+                employeeText2.setText(observableList.get(0).toString());
             } else {
                 employeeText2.setVisible(false);
                 descriptionText2.setVisible(false);
@@ -213,6 +420,8 @@ public class FacilityAllController implements Initializable {
                 employeeText3.setVisible(true);
                 descriptionText3.setVisible(true);
                 date3.setVisible(true);
+                assert observableList != null;
+                employeeText3.setText(observableList.get(0).toString());
             } else {
                 employeeText3.setVisible(false);
                 descriptionText3.setVisible(false);
@@ -224,9 +433,18 @@ public class FacilityAllController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addButton.setDisable(true);
+        addButtonHoliday.setDisable(true);
         pane.setVisible(false);
+        holidayPane.setVisible(false);
+        listInspectionButton.setDisable(true);
+        listHolidayButton.setDisable(true);
+        listEmployeeButton.setDisable(true);
+        employeeInfoButton.setDisable(true);
 
         observableList = Database.employeeDataView("all", 0);
+
+        assert observableList != null;
+        employeeText.setText(observableList.get(0).toString());
 
         TextFields.bindAutoCompletion(employeeText, observableList);
         TextFields.bindAutoCompletion(employeeText1, observableList);

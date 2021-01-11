@@ -44,7 +44,7 @@
                   <Insets top="1.0" />
                </VBox.margin>
             </TextField>
-            <DatePicker fx:id="dobAdd" prefWidth="396.0" promptText="01.01.2000">
+            <DatePicker fx:id="dobAdd" editable="false" prefWidth="396.0" promptText="Data urodzenia">
                <VBox.margin>
                   <Insets top="1.0" />
                </VBox.margin>
@@ -74,7 +74,7 @@
                   <Insets top="1.0" />
                </VBox.margin>
             </TextField>
-            <DatePicker fx:id="ppeAdd" prefWidth="396.0" promptText="01.01.2000">
+            <DatePicker fx:id="ppeAdd" editable="false" prefWidth="396.0" promptText="Data wydania ŚOO">
                <VBox.margin>
                   <Insets top="1.0" />
                </VBox.margin>

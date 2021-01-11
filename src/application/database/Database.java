@@ -4,6 +4,7 @@ import application.entities.Employee;
 import application.entities.Facility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 
 import java.sql.*;
@@ -49,7 +50,7 @@ public class Database {
                 employee.setLastName(rs.getString("last_name"));
                 employee.setAddress(rs.getString("address"));
                 employee.setCategory(rs.getString("category"));
-                employee.setCourseHoursSum(rs.getString("course_hours_sum"));
+                employee.setCourseHoursSum(String.valueOf(rs.getInt("course_hours_sum")));
                 employee.setDOB(rs.getDate("DOB") == null ? null : rs.getDate("DOB").toLocalDate());
                 employee.setPhone(rs.getString("phone"));
                 employee.setPosition(rs.getString("pos"));
@@ -148,7 +149,7 @@ public class Database {
         String sql = "";
         if (type.equals("all")) {
             sql = "SELECT * FROM employee_data_view";
-        } else if (type.equals("forFacility")) {
+        } else if (type.equals("for Facility")) {
             sql = "SELECT * FROM employee_data_view edv JOIN employee_facility ef ON edv.id_employee = ef.id_employee WHERE ef.id_facility = " + idFacility + ";";
         }
         ObservableList<Employee> observableList = FXCollections.observableArrayList();
@@ -164,6 +165,48 @@ public class Database {
                 employee.setFirstName(rs.getString("first_name"));
                 employee.setLastName(rs.getString("last_name"));
                 employee.setCategory(rs.getString("category"));
+                employee.setAddress(rs.getString("address"));
+                employee.setPhone(rs.getString("phone"));
+                employee.setCourseHoursSum(String.valueOf(rs.getInt("course_hours_sum")));
+                employee.setDOB(rs.getDate("DOB") == null ? null : rs.getDate("DOB").toLocalDate());
+                employee.setPosition(rs.getString("position"));
+                employee.setPPE(rs.getDate("PPE") == null ? null : rs.getDate("PPE").toLocalDate());
+                employee.setSalary(rs.getString("salary"));
+                observableList.add(employee);
+            }
+            long elapsedTime = System.nanoTime() - startTime;
+            System.out.println(" | " + (double) elapsedTime / 1000000 + " ms");
+            return observableList;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            showMessageDialog(null, e.getMessage());
+            return null;
+        }
+    }
+
+    public static ObservableList<Employee> employeeDataViewBySalary(String type, int idFacility, int minSalary, int maxSalary) {
+        String sql = "";
+        if (type.equals("all")) {
+            sql = "SELECT * FROM employee_data_view WHERE salary BETWEEN " + minSalary + " AND " + maxSalary + ";";
+        } else if (type.equals("for Facility")) {
+            sql = "SELECT * FROM employee_data_view edv JOIN employee_facility ef ON edv.id_employee = ef.id_employee WHERE ef.id_facility = " + idFacility + " AND salary BETWEEN " + minSalary + " AND " + maxSalary + ";";
+        }
+        ObservableList<Employee> observableList = FXCollections.observableArrayList();
+
+        try (Connection conn = connect();
+             Statement st = conn.createStatement();
+        ) {
+            long startTime = System.nanoTime();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                Employee employee = new Employee();
+                employee.setId(rs.getInt("id_employee"));
+                employee.setFirstName(rs.getString("first_name"));
+                employee.setLastName(rs.getString("last_name"));
+                employee.setCategory(rs.getString("category"));
+                employee.setAddress(rs.getString("address"));
+                employee.setPhone(rs.getString("phone"));
+                employee.setCourseHoursSum(String.valueOf(rs.getInt("course_hours_sum")));
                 employee.setDOB(rs.getDate("DOB") == null ? null : rs.getDate("DOB").toLocalDate());
                 employee.setPosition(rs.getString("position"));
                 employee.setPPE(rs.getDate("PPE") == null ? null : rs.getDate("PPE").toLocalDate());
@@ -273,7 +316,6 @@ public class Database {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             showMessageDialog(null, e.getMessage());
-            System.exit(1);
         }
     }
 
@@ -287,6 +329,96 @@ public class Database {
             System.out.println(e.getMessage());
             System.exit(1);
         }
+    }
+
+    public static void addHolidayForFacility(int facilityId, int employeeId, String holidayName, LocalDate holidayDate, float holidayProceeds) {
+        String sql = "SELECT * FROM addHolidayForFacility(" + facilityId + "," + employeeId + ",'" + holidayName + "'," + (holidayDate == null ? null : "'" + holidayDate + "'") + "," + holidayProceeds + ");";
+
+        try (Connection conn = connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.execute();
+        } catch (SQLException e) {
+            showMessageDialog(null, e.getMessage());
+            System.out.println(e.getMessage());
+            System.exit(1);
+        }
+    }
+
+    public static ObservableList<String> inspectionDataView(int facilityId) {
+        String sql = "SELECT * from inspection_data_view WHERE id_facility = " + facilityId + ";";
+        ObservableList<String> observableList = FXCollections.observableArrayList();
+
+        try (Connection conn = connect();
+             Statement st = conn.createStatement();
+        ) {
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                String str = "Osoba odpowiedzialna: ";
+                str += (rs.getString("first_name")) + " ";
+                str += (rs.getString("last_name")) + "; Data: ";
+                str += (rs.getDate("date")) + "; Opis: ";
+                str += (rs.getString("description")) + ";";
+                observableList.add(str);
+            }
+            return observableList;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            showMessageDialog(null, e.getMessage());
+            return null;
+        }
+    }
+
+    public static ObservableList<String> holidayDataView(int facilityId) {
+        String sql = "SELECT * from holiday_data_view WHERE id_facility = " + facilityId + ";";
+        ObservableList<String> observableList = FXCollections.observableArrayList();
+
+        try (Connection conn = connect();
+             Statement st = conn.createStatement();
+        ) {
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                String str = "Swięto: ";
+                str += (rs.getString("name")) + "; Data: ";
+                str += (rs.getDate("date")) + "; Dochód: ";
+                str += (rs.getFloat("proceeds")) + ";";
+                observableList.add(str);
+            }
+            return observableList;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            showMessageDialog(null, e.getMessage());
+            return null;
+        }
+    }
+
+    public static void deleteEmployee(Employee employee) {
+        String sql = "SELECT * FROM deleteEmployee(" + employee.getId() + ");";
+
+        try (Connection conn = connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.execute();
+        } catch (SQLException e) {
+            showMessageDialog(null, e.getMessage());
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static int addCourse(Employee employee, String courseName, int courseHours) {
+        String sql = "SELECT * FROM addCourse(" + employee.getId() + ", '" + courseName + "'," + courseHours + ");";
+
+        try (Connection conn = connect();
+             Statement st = conn.createStatement();) {
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                int courseHoursSum = 0;
+                courseHoursSum = rs.getInt("addcourse");
+                return courseHoursSum;
+            }
+        } catch (SQLException e) {
+            showMessageDialog(null, e.getMessage());
+            System.out.println(e.getMessage());
+        }
+        return 0;
     }
 }
 

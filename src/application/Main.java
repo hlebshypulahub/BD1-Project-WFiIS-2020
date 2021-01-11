@@ -6,11 +6,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.concurrent.CountDownLatch;
+
 public class Main extends Application {
+
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("login/Login.fxml"));
-        primaryStage.setTitle("Hleb Shypula - Panel logowania");
+        primaryStage.setTitle("Panel logowania");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }

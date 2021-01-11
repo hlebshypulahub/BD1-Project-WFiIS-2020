@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -12,18 +13,18 @@
 
 <Pane fx:id="mainArea" prefHeight="750.0" prefWidth="933.0" style="-fx-background-color: #E6E6FA;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.dashboard.facility.control.facilityall.FacilityAllController">
    <children>
-      <TableView fx:id="table" onMouseClicked="#enableButtons" prefHeight="298.0" prefWidth="933.0">
+      <TableView fx:id="table" onMouseClicked="#enableButtons" prefHeight="245.0" prefWidth="933.0">
          <columns>
             <TableColumn fx:id="nameCol" maxWidth="682.0" minWidth="-1.0" prefWidth="672.0" text="Nazwa" />
             <TableColumn fx:id="statusCol" maxWidth="761.0" minWidth="-1.0" prefWidth="260.0" text="Status" />
          </columns>
       </TableView>
-      <Button fx:id="addButton" layoutX="14.0" layoutY="307.0" mnemonicParsing="false" onAction="#showAddInspection" prefHeight="53.0" prefWidth="234.0" text="Dodaj inspekcję">
+      <Button fx:id="addButton" layoutX="8.0" layoutY="413.0" mnemonicParsing="false" onAction="#showAddInspection" prefHeight="53.0" prefWidth="234.0" text="Dodaj inspekcję">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Pane fx:id="pane" layoutX="14.0" layoutY="375.0" prefHeight="265.0" prefWidth="920.0">
+      <Pane fx:id="pane" layoutX="8.0" layoutY="481.0" prefHeight="265.0" prefWidth="920.0">
          <children>
             <TextField fx:id="employeeText" prefHeight="25.0" prefWidth="234.0" promptText="Osoba odpowiedzialna" />
             <DatePicker fx:id="date" editable="false" layoutY="35.0" prefHeight="25.0" prefWidth="234.0" promptText="Data" />
@@ -55,5 +56,31 @@
             <TextField fx:id="descriptionText2" layoutX="422.0" layoutY="163.0" prefHeight="25.0" prefWidth="159.0" promptText="Opisz szczegóły" />
          </children>
       </Pane>
+      <Button fx:id="addButtonHoliday" layoutX="271.0" layoutY="413.0" mnemonicParsing="false" onAction="#showAddHoliday" prefHeight="53.0" prefWidth="303.0" text="Dodaj święto">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Pane fx:id="holidayPane" layoutX="272.0" layoutY="475.0" prefHeight="129.0" prefWidth="303.0" style="-fx-background-color: white;">
+         <children>
+            <Button layoutX="240.0" layoutY="41.0" mnemonicParsing="false" onAction="#addHoliday" prefHeight="53.0" prefWidth="61.0" text="Dodaj" />
+            <ComboBox fx:id="holidayName" layoutX="2.0" layoutY="2.0" prefHeight="25.0" prefWidth="234.0" promptText="Święto" />
+            <DatePicker fx:id="holidayDate" editable="false" layoutX="2.0" layoutY="34.0" prefHeight="25.0" prefWidth="234.0" promptText="Data" />
+            <TextField fx:id="holidayProceeds" layoutX="2.0" layoutY="68.0" prefHeight="25.0" prefWidth="234.0" promptText="Dochód" />
+            <ComboBox fx:id="holidayEmployee" layoutX="2.0" layoutY="102.0" prefHeight="25.0" prefWidth="234.0" promptText="Pracownik" />
+         </children>
+      </Pane>
+      <Button fx:id="listInspectionButton" layoutX="14.0" layoutY="253.0" mnemonicParsing="false" onAction="#showInspections" prefHeight="33.0" prefWidth="179.0" text="Wylistuj inspekcje" />
+      <ListView fx:id="tableOptions" layoutX="14.0" layoutY="289.0" prefHeight="120.0" prefWidth="413.0" />
+      <Button fx:id="listHolidayButton" layoutX="248.0" layoutY="253.0" mnemonicParsing="false" onAction="#showHolidays" prefHeight="33.0" prefWidth="179.0" text="Wylistuj święta" />
+      <Button fx:id="listEmployeeButton" layoutX="467.0" layoutY="253.0" mnemonicParsing="false" onAction="#showEmployees" prefHeight="33.0" prefWidth="179.0" text="Wylistuj pracowników" />
+      <TableView fx:id="tableEmployee" layoutX="467.0" layoutY="289.0" onMouseClicked="#enableEmployeeInfoButton" prefHeight="120.0" prefWidth="450.0">
+        <columns>
+          <TableColumn fx:id="employeeFirstNameCol" prefWidth="137.0" text="Imię" />
+          <TableColumn fx:id="employeeLastNameCol" prefWidth="180.0" text="Nazwisko" />
+            <TableColumn fx:id="employeePositionCol" prefWidth="132.0" text="Stanowisko" />
+        </columns>
+      </TableView>
+      <Button fx:id="employeeInfoButton" layoutX="738.0" layoutY="253.0" mnemonicParsing="false" onAction="#showEmployeeInfoPage" prefHeight="33.0" prefWidth="179.0" text="Pokaż dane pracownika" />
    </children>
 </Pane>

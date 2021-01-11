@@ -1,9 +1,11 @@
 package application.dashboard;
 
+import application.Main;
 import application.dashboard.employee.control.EmployeeControlController;
 import application.dashboard.employee.info.EmployeeInfoController;
 import application.dashboard.mainpage.MainPageController;
 import application.entities.Employee;
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +31,8 @@ public class DashboardController implements Initializable {
     @FXML
     private Button employeeControlButton;
     @FXML
+    private Button facilityControlButton;
+    @FXML
     private VBox buttonsVBox;
     private boolean employeeControlStageExists = false;
     private boolean facilityControlStageExists = false;
@@ -41,8 +45,12 @@ public class DashboardController implements Initializable {
 
     public void drawPane() {
         if (!(userEmployee.getRole().equals("CEO") || userEmployee.getRole().equals("manager"))) {
-            buttonsVBox.getChildren().removeAll(employeeControlButton, controlPanelLabel);
+            buttonsVBox.getChildren().removeAll(employeeControlButton, controlPanelLabel, facilityControlButton);
         }
+    }
+
+    public static void main (String[] args){
+        Application.launch(Main.class, args);
     }
 
     @FXML

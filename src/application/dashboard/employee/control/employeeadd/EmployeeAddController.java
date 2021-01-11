@@ -2,16 +2,17 @@ package application.dashboard.employee.control.employeeadd;
 
 import application.database.Database;
 import application.entities.Employee;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
 
 public class EmployeeAddController implements Initializable {
     @FXML
@@ -46,17 +47,42 @@ public class EmployeeAddController implements Initializable {
         Employee employee = new Employee();
 
         employee.setUsername(usernameAdd.getText());
-        employee.setFirstName(firstNameAdd.getText());
+        employee.setAddress(firstNameAdd.getText());
         employee.setLastName(lastNameAdd.getText());
+        try {
+            Integer.parseInt(salaryAdd.getText());
+        } catch (Exception exception) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Błąd!");
+            alert.setHeaderText("Wpisz wynagrodzenie poprawnie!");
+            alert.showAndWait();
+            return;
+        }
         employee.setSalary(salaryAdd.getText());
         employee.setAddress(addressAdd.getText());
         employee.setPosition(positionAdd.getValue() == null ? "Pracownik" : positionAdd.getValue());
+        if (!phoneAdd.getText().matches("^[\\+\\d]?(?:[\\d-.\\s()]*)$")) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Błąd!");
+            alert.setHeaderText("Podaj poprawny numer telefonu!");
+            alert.showAndWait();
+            return;
+        }
         employee.setPhone(phoneAdd.getText());
         employee.setDOB(dobAdd.getValue());
         employee.setPPE(ppeAdd.getValue());
         employee.setCategory(categoryAdd.getValue() == null ? "1" : categoryAdd.getValue());
         employee.setRole(roleAdd.getValue() == null ? "employee" : roleAdd.getValue());
         employee.setPassword(passwordAdd.getText());
+        try {
+            Integer.parseInt(courseHoursSumAdd.getText());
+        } catch (Exception exception) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Błąd!");
+            alert.setHeaderText("Wpisz sumę godzin na kursach poprawnie!");
+            alert.showAndWait();
+            return;
+        }
         employee.setCourseHoursSum(courseHoursSumAdd.getText());
 
         if (Database.addEmployee(employee)) {
